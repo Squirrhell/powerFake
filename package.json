@@ -1,0 +1,19 @@
+{
+  "name": "powerfake",
+  "version": "1.0.0",
+  "description": "projet desktop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Squirrhell/powerFake.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Squirrhell/powerFake/issues"
+  },
+  "homepage": "https://github.com/Squirrhell/powerFake#readme"
+}
