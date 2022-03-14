@@ -1,20 +1,22 @@
 {
   "name": "powerfake",
-  "version": "1.0.0",
-  "description": "projet desktop",
-  "main": "index.js",
-  "type":"module",
+  "private": true,
+  "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:start": "electron .",
+    "start": "node scripts/start.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Squirrhell/powerFake.git"
+  "dependencies": {
+    "highlight.js": "^11.4.0",
+    "vue": "^3.2.25"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Squirrhell/powerFake/issues"
-  },
-  "homepage": "https://github.com/Squirrhell/powerFake#readme"
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.0",
+    "electron": "^17.1.0",
+    "vite": "^2.8.0"
+  }
 }
