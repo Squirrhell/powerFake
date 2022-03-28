@@ -9,7 +9,7 @@ const createWindow = () => {
         height: 500,
         minHeight: 500,
         show: false,
-        icon: "./public/favicon.ico",
+        icon: "./public/redcerclecancel",
         webPreferences : {
            preload : path.join(__dirname, "scripts/preload.js"),
         }
@@ -25,72 +25,60 @@ const createWindow = () => {
         mainWindow.show();
     });
 
-    const isDev = process.env.NODE_ENV != "production";
-    const isMac = process.platform == "darwin";
+    
 
-    const menu = Menu.buidFromTemplate([
-        {
-            label : "Fichier",
-            submenu : [
-                {
-                    label : "Ouvrir dossier zip",
-                    accelerator : "CmdOrCtrl+O",
-                    click : () => {
-                        const pathToTargetZip = () => {
-                            dialog.showOpenDialog([browserWindow,], defaultPath)
-                        }
-                        zl.extract(pathToTargetZip, app.getPath("temp")).then(function () {
-                            console.log("done");
-                        }, function (err) {
-                            console.log(err);
-                        });
-                    }
-                },
-                {
-                    label : "Sauvegarder",
-                    accelerator : "CmdOrCtrl+S",
-                    click : () => {
-                        BrowserWindow.getFocusedWindow().webContents.send("save-file",{});
-                    }
-                },
-            ]
-        },
-        ...(isMac ? [{role : "appMenu"}] : []),
-        {
-            label : "Fichiers",
-            submenu : [
-                {role : "close"},
-                {label : "Ouvrir", accelerator : "Ctrl+O"}
-            ],
-        },
-        ...(isDev ? [
-            {
-                label : "Development",
-                submenu : [
-                    {role : "toggleDevTools"},
-                    {role : "reload"},
-                ],
-            },
-        ]: []),
-        {
-            label : "A Propos",
-            submenu : [
-                {
-                    label : "Aide",
-                    accelerator : "Ctrl+H"
-                },
-                {
-                    label : "Version"
-                },
-                {
-                    type : "separator"
-                }
-            ],
-        },
-    ]);
-    Menu.setApplicationMenu(menu);
+    
 };
-
+const isDev = process.env.NODE_ENV != "production";
+const isMac = process.platform == "darwin";
+const menu = Menu.buildFromTemplate([
+    ...(isMac ? [{role : "appMenu"}] : []),
+    {
+        label : "Fichier",
+        submenu : [
+            {
+                label : "Ouvrir dossier zip",
+                accelerator : "CmdOrCtrl+O",
+                click : () => {
+                    openDirectory();
+                }
+            },
+            {
+                label : "Sauvegarder",
+                accelerator : "CmdOrCtrl+S",
+                click : () => {
+                    BrowserWindow.getFocusedWindow().webContents.send("save-file",{});
+                }
+            },
+        ]
+    },
+    
+    ...(isDev ? [
+        {
+            label : "Development",
+            submenu : [
+                {role : "toggleDevTools"},
+                {role : "reload"},
+            ],
+        },
+    ]: []),
+    {
+        label : "A Propos",
+        submenu : [
+            {
+                label : "Aide",
+                accelerator : "Ctrl+H"
+            },
+            {
+                label : "Version"
+            },
+            {
+                type : "separator"
+            }
+        ],
+    },
+]);
+Menu.setApplicationMenu(menu);
 app.on("window-all-closed", () => {
     //if(process.plateform != "drawin"){
     if(!isMac){
@@ -105,9 +93,23 @@ app.on("activate", () => {
 });
 
 const launch = async () => {
-    await app.whenReady();
+    await app.whenReady(); 
     createWindow();
 };
-
-
+async function openDirectory(){
+    const pathToTargetZip = () => {
+        return dialog.showOpenDialog(BrowserWindow.getFocusedWindow)
+    }
+    const result = await pathToTargetZip();
+    if(result.canceled){
+        return;
+    }
+    zl.extract(result.filePaths[0], app.getPath("temp")).then(function () {
+        console.log("done");
+    }, function (err) {
+        console.log(err);
+    });
+    
+}
+console.log(app.getPath("temp")); 
 launch();
