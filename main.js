@@ -9,7 +9,7 @@ const createWindow = () => {
         height: 500,
         minHeight: 500,
         show: false,
-        icon: "./public/favicon.ico",
+        icon: "./public/redcerclecancel",
         webPreferences : {
            preload : path.join(__dirname, "scripts/preload.js"),
         }
