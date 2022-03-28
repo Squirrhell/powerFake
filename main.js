@@ -1,5 +1,6 @@
-const {BrowserWindow, app, Menu} = require('electron');
+const {BrowserWindow, app, dialog, Menu} = require('electron');
 const path = require('path');
+const zl = require("zip-lib");
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -28,9 +29,35 @@ const createWindow = () => {
     const isMac = process.platform == "darwin";
 
     const menu = Menu.buidFromTemplate([
-        ...(isMac ? [{role : "appMenu"}] : []),
         {
             label : "Fichier",
+            submenu : [
+                {
+                    label : "Ouvrir dossier zip",
+                    accelerator : "CmdOrCtrl+O",
+                    click : () => {
+                        const pathToTargetZip = () => {
+                            dialog.showOpenDialog([browserWindow,], defaultPath)
+                        }
+                        zl.extract(pathToTargetZip, app.getPath("temp")).then(function () {
+                            console.log("done");
+                        }, function (err) {
+                            console.log(err);
+                        });
+                    }
+                },
+                {
+                    label : "Sauvegarder",
+                    accelerator : "CmdOrCtrl+S",
+                    click : () => {
+                        BrowserWindow.getFocusedWindow().webContents.send("save-file",{});
+                    }
+                },
+            ]
+        },
+        ...(isMac ? [{role : "appMenu"}] : []),
+        {
+            label : "Fichiers",
             submenu : [
                 {role : "close"},
                 {label : "Ouvrir", accelerator : "Ctrl+O"}

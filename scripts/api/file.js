@@ -1,6 +1,8 @@
 const fs = require('fs/promises');
 const {join} = require('path');
 const {homedir} = require('os');
+const { app } = require('electron');
+
 
 const writeFile = async (fileName, content) => {
     const path = join(homedir().fileName);
@@ -17,6 +19,8 @@ const readFile = async (fileName) => {
         return '';
     }
 }
+
+
 
 module.exports = {
     writeFile,
