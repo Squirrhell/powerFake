@@ -9,7 +9,7 @@ const createWindow = () => {
         height: 500,
         minHeight: 500,
         show: false,
-        icon: "./public/redcerclecancel",
+        icon: "./public/redcerclecancel.ico",
         webPreferences : {
            preload : path.join(__dirname, "scripts/preload.js"),
         }
@@ -18,7 +18,7 @@ const createWindow = () => {
         mainWindow.loadURL("http://localhost:3000");
     }
     else {
-        mainWindow.loadFile("./dist/index.html");
+        mainWindow.loadFile("index.html");
     }
     mainWindow.maximize();
     mainWindow.once("ready-to-show", () => {
