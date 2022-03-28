@@ -6,8 +6,8 @@ vite.stdout.on("data", (data) => {
     const str = data.toString();
     if(str.includes("ready in")){
         electron = spawn("npm.cmd", ["run", "electron:start"]);
-       // electron.stdout.pipe(process.stdout);
-     //   electron.stderr.pipe(process.stderr);
+        electron.stdout.pipe(process.stdout);
+        electron.stderr.pipe(process.stderr);
         console.log("in include");
     }
 })

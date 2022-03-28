@@ -6,7 +6,7 @@ const { app } = require('electron');
 
 const writeFile = async (fileName, content) => {
     const path = join(homedir().fileName);
-    await fs.writeFile(path.content.{encoding : "utf-8"});
+    await fs.writeFile(path.content,{encoding : "utf-8"});
 };
 
 const readFile = async (fileName) => {
