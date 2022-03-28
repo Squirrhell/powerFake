@@ -21,7 +21,7 @@ function runRegex(schema, file){
     return results;
 };
 
-function traitement(file) {
+const traitement = (file) => {
     //mettre au début et à la fin du fichier respectivement '<section>' et '</section>'
     file = '<section>'+file+'</section>';
     file = file.replace(reg_section, '</section><section>')
